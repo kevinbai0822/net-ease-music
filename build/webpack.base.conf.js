@@ -4,6 +4,7 @@ var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve(dir) {
+  // console.log(dir)
   return path.join(__dirname, '..', dir)
 }
 
@@ -22,6 +23,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+      "icons": resolve("node_modules/vue-material-design-icons"),
       '@': resolve('src'),
     }
   },
@@ -61,14 +63,8 @@ module.exports = {
         }
       },
       {
-        test: /\.less$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader" // translates CSS into CommonJS
-        }, {
-          loader: "less-loader" // compiles Less to CSS
-        }]
+        test: /\.scss$/,
+        loaders: ["style","css","sass"]
       }
     ]
   }
