@@ -14,5 +14,6 @@ module.exports = {
     source: 'src',
     img: 'src',
     image: 'xlink:href'
-  }
+  },
+  'scss': 'style-loader!css-loader!sass-loader'
 }

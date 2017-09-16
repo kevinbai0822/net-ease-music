@@ -1,6 +1,6 @@
 <template>
     <div>
-        勇敢的少年啊快去创造奇迹
+        
     </div>
 </template>
 <script>
