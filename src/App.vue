@@ -1,23 +1,29 @@
 <template>
 	<div class="music-wrap" id="app">
 		<div class="music-header">网易云音乐</div>
-		<div class="left-bar">
-			<div class="menu-indent"><MenuList /></div>
+		<div class="left-bar" :class="{'indent-bar': isShow}">
+			<div class="menu-indent"><a href="javascript:;" @click="menuIndent"><MenuList /></a></div>
 			<div class="menu-panel">
 				<ul class="menu-items">
 					<li class="menu-item"><magnify /><span>搜索</span></li>
 					<li class="menu-item"><music /><span>发现音乐</span></li>
 					<li class="menu-item"><playBox /><span>MV</span></li>
 					<li class="menu-item"><friends /><span>朋友</span></li>
+					<li class="menu-item" v-if='isShow'><a href="javascript:;" @click="menuShow"><transfer /></a></li>
 				</ul>
-				<div class="menu-title">我的音乐</div>
-				<ul class="menu-items">
+				<div class="menu-title" v-if='!isShow'>我的音乐</div>
+				<ul class="menu-items" v-if='!isShow'>
 					<li class="menu-item"><musicBox /><span>本地音乐</span></li>
 					<li class="menu-item"><download /><span>下载管理</span></li>
 					<li class="menu-item"><clock /><span>最近播放</span></li>
 					<li class="menu-item"><cloud /><span>我的音乐云盘</span></li>
 					<li class="menu-item"><radio /><span>我的电台</span></li>
 					<li class="menu-item"><collect /><span>我的收藏</span></li>
+				</ul>
+				<div class="menu-title" v-if='!isShow'>创建的歌单 <plusCircle /></div>
+				<ul class="menu-items" v-if='!isShow'>
+					<li class="menu-item"><heart /><span>我喜欢的音乐</span></li>
+					<li class="menu-item" v-for="s in songSheet"><headphone /><span>{{s.sheetName}}</span></li>
 				</ul>
 			</div>
 		</div>
@@ -37,9 +43,28 @@ import clock from 'icons/clock'
 import cloud from 'icons/cloud-outline'
 import collect from 'icons/folder-plus'
 import radio from 'icons/radio-tower'
+import heart from 'icons/heart-outline'
+import headphone from 'icons/headphones'
+import plusCircle from 'icons/plus-circle-outline'
+import transfer from 'icons/transfer'
 
 export default {
 	name: 'app',
+	data(){
+		return{
+			songSheet: [
+				{
+					sheetId: 1,
+					sheetName: '我说这些歌很美，你说是的'
+				},
+				{
+					sheetId: 2,
+					sheetName: '乱·收'
+				}
+			],
+			isShow: false
+		}
+	},
 	components:{
 		MenuList,
 		magnify,
@@ -52,6 +77,18 @@ export default {
 		cloud,
 		collect,
 		radio,
+		heart,
+		headphone,
+		plusCircle,
+		transfer,
+	},
+	methods: {
+		menuIndent(){
+			this.isShow = !this.isShow
+		},
+		menuShow(){
+			this.isShow = false
+		}
 	}
 }
 </script>
@@ -81,8 +118,8 @@ export default {
 		width: 1.95rem;
 		height: 5.35rem;
 		background-color: #f3f3f5;
+		transition: width 0.5s ease;
 		.material-design-icon{
-			// display: inline-block;
 			width: .18rem;
 			height: .18rem;
 			color: #7e7e7e;
@@ -106,14 +143,20 @@ export default {
 			height: 4.3rem;
 			overflow-y: auto;
 			.menu-title{
+				position: relative;
 				font-size: .12rem;
 				color: #aaaaab;
 				width: 100%;
-				height: .25rem;
-				line-height: .25rem;
+				height: .26rem;
+				line-height: .26rem;
 				box-sizing: border-box;
 				padding-left: .15rem;
 				margin-top: .2rem;
+				.material-design-icon{
+					position: absolute;
+					right: .2rem;
+					top: 0.045rem
+				}
 			}
 			.menu-items{
 				.menu-item{
@@ -131,6 +174,24 @@ export default {
 						font-size: .14rem;
 						display: inline-block;
 						margin-left: .15rem;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+
+	.indent-bar{
+		width: .45rem;
+		transition: width 0.5s ease;
+		.menu-panel{
+			.menu-items{
+				.menu-item{
+					span{
+						display: none;
 					}
 				}
 			}
