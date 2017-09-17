@@ -35,6 +35,31 @@
 		</div>
 		<div class="play-panel">
 			<div class="album-cover"></div>
+			<div class="play-operate">
+				<a href="javascript:;" class="prev"><prev /></a>
+				<a href="javascript:;" class="play"><play /></a>
+				<a href="javascript:;" class="next"><next /></a>
+			</div>
+			<div class="play-msg">
+				<div class="song-wrap">
+					<p class="song-msg">
+						<span class="song-name">心要野</span> - <span class="songer-name">后海大鲨鱼</span>
+					</p>
+					<p class="play-time-msg">
+						<span class="play-time">00:00</span> / <span class="song-time">04:36</span>
+					</p>
+				</div>
+				<div class="progress-wrap">
+					adsfas
+				</div>
+				<audio><source src="./assets/上海音乐学院学生 - 东极岛岛歌.mp3"type="audio/mpeg" /></audio>
+			</div>
+			<div class="play-setting-wrap">
+				<a href="javascript:;"><heart /></a>
+				<a href="javascript:;"><loop /></a>
+				<a href="javascript:;"><volume /></a>
+				<a href="javascript:;"><playList /></a>
+			</div>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -58,6 +83,13 @@ import plusCircle from 'icons/plus-circle-outline'
 import transfer from 'icons/transfer'
 import setting from 'icons/settings'
 import email from 'icons/email-outline'
+import prev from 'icons/skip-previous-circle'
+import next from 'icons/skip-next-circle'
+import play from 'icons/play-circle'
+import pause from 'icons/pause-circle'
+import loop from 'icons/loop'
+import playList from 'icons/playlist-play'
+import volume from 'icons/volume-high'
 
 export default {
 	name: 'app',
@@ -94,6 +126,13 @@ export default {
 		transfer,
 		setting,
 		email,
+		prev,
+		next,
+		play,
+		pause,
+		loop,
+		playList,
+		volume,
 	},
 	methods: {
 		menuIndent(){
@@ -272,6 +311,7 @@ export default {
 	.play-panel{
 		position: absolute;
 		display: flex;
+		align-items: center;
 		bottom: 0;
 		width: 100%;
 		height: .63rem;
@@ -281,6 +321,77 @@ export default {
 			height: .63rem;
 			background: url("./assets/images/album.jpg") center no-repeat;
 			background-size: cover;
+		}
+		.play-operate{
+			display: flex;
+			align-items: center;
+			margin-left: .35rem;
+			a{
+				.material-design-icon{
+					width: .30rem;
+					height: .30rem;
+					svg{
+						width: .30rem;
+						height: .30rem;
+						fill: $theme-color;
+					}
+				}
+				&:not(:last-child){
+					margin-right: .2rem;
+				}
+			}
+			.play{
+				.material-design-icon{
+					width: .35rem;
+					height: .35rem;
+					svg{
+						width: .35rem;
+						height: .35rem;
+					}
+				}
+			}
+		}
+		.play-msg{
+			flex-grow: 1;
+			margin-left: .3rem;
+			.song-wrap{
+				position: relative;
+				height: .15rem;
+				p{
+					position: absolute;
+					span:first-child{
+						color: #666;
+					}
+					span:last-child{
+						color: #979797;
+					}
+				}
+				.song-msg{
+					left: 0;
+					font-size: .13rem;
+				}
+				.play-time-msg{
+					right: 0;
+				}
+			}
+			.progress-wrap{
+				margin-top: .1rem;
+			}
+		}
+		.play-setting-wrap{
+			margin-left: .4rem;
+			a{
+				margin-right: .35rem;
+				.material-design-icon{
+					width: .18rem;
+					height: .18rem;
+					svg{
+						width: .18rem;
+						height: .18rem;
+						fill: #7e7e7e;
+					}
+				}
+			}
 		}
 	}
 }
