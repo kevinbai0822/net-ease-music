@@ -23,9 +23,18 @@
 				<div class="menu-title" v-if='!isShow'>创建的歌单 <plusCircle /></div>
 				<ul class="menu-items" v-if='!isShow'>
 					<li class="menu-item"><heart /><span>我喜欢的音乐</span></li>
-					<li class="menu-item" v-for="s in songSheet"><headphone /><span>{{s.sheetName}}</span></li>
+					<li class="menu-item" v-for='s in songSheet'><headphone /><span>{{s.sheetName}}</span></li>
 				</ul>
 			</div>
+			<div class="user-panel">
+				<i class="avatar"></i>
+				<span class="user-name">图图也叫小卷毛</span>
+				<a href="javascript:;" class="email"><email /></a>
+				<a href="javascript:;" class="setting"><setting /></a>
+			</div>
+		</div>
+		<div class="play-panel">
+			<div class="album-cover"></div>
 		</div>
 		<router-view></router-view>
 	</div>
@@ -47,6 +56,8 @@ import heart from 'icons/heart-outline'
 import headphone from 'icons/headphones'
 import plusCircle from 'icons/plus-circle-outline'
 import transfer from 'icons/transfer'
+import setting from 'icons/settings'
+import email from 'icons/email-outline'
 
 export default {
 	name: 'app',
@@ -81,6 +92,8 @@ export default {
 		headphone,
 		plusCircle,
 		transfer,
+		setting,
+		email,
 	},
 	methods: {
 		menuIndent(){
@@ -99,10 +112,12 @@ export default {
 @import './assets/base/variable';
 
 .music-wrap{
+	position: relative;
 	width: 100%;
 	max-width: 9.35rem;
 	height: 6.3rem;
 	margin: 0 auto;
+	border: 1px solid #ccc;
 
 	.music-header{
 		padding-left: 12px;
@@ -118,6 +133,7 @@ export default {
 		width: 1.95rem;
 		height: 5.35rem;
 		background-color: #f3f3f5;
+		border-right: $border;
 		transition: width 0.5s ease;
 		.material-design-icon{
 			width: .18rem;
@@ -182,19 +198,89 @@ export default {
 				}
 			}
 		}
+		.user-panel{
+			display: flex;
+			width: 100%;
+			height: 0.6rem;
+			line-height: 0.6rem;
+			align-items: center;
+			border-top: $border;
+			.avatar{
+				margin: 0 .1rem;
+				width: .3rem;
+				height: .3rem;
+				border-radius: 50%;
+				background: url("./assets/images/account.png") center no-repeat;
+				background-size: contain;
+			}
+			.user-name{
+				display: inline-block;
+				margin-right: .15rem;
+				width: .7rem;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			a{
+				display: flex;
+			}
+			.email{
+				margin-right: .2rem;
+			}
+		}
 	}
 
 	.indent-bar{
 		width: .45rem;
 		transition: width 0.5s ease;
 		.menu-panel{
+			height: 3.6rem;
 			.menu-items{
 				.menu-item{
+					padding: .13rem;
 					span{
 						display: none;
 					}
 				}
 			}
+		}
+		.user-panel{
+			height: auto;
+			flex-direction: column;
+			justify-content: center;
+			padding-top: .15rem;
+			.avatar{
+				margin-bottom: .1rem;
+			}
+			.user-name{
+				display: none;
+			}
+			a{
+				display: flex;
+				box-sizing: border-box;
+				padding-left: .13rem;
+				width: 100%;
+				height: .35rem;
+				line-height: .35rem;
+			}
+			.email{
+				margin-right: 0;
+			}
+		}
+	}
+
+	.play-panel{
+		position: absolute;
+		display: flex;
+		bottom: 0;
+		width: 100%;
+		height: .63rem;
+		border-top: $border;
+		.album-cover{
+			width: .63rem;
+			height: .63rem;
+			background: url("./assets/images/album.jpg") center no-repeat;
+			background-size: cover;
 		}
 	}
 }
