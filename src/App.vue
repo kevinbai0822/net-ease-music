@@ -1,36 +1,41 @@
 <template>
 	<div class="music-wrap" id="app">
 		<div class="music-header">网易云音乐</div>
-		<div class="left-bar" :class="{'indent-bar': isShow}">
-			<div class="menu-indent"><a href="javascript:;" @click="menuIndent"><MenuList /></a></div>
-			<div class="menu-panel">
-				<ul class="menu-items">
-					<li class="menu-item"><magnify /><span>搜索</span></li>
-					<li class="menu-item"><music /><span>发现音乐</span></li>
-					<li class="menu-item"><playBox /><span>MV</span></li>
-					<li class="menu-item"><friends /><span>朋友</span></li>
-					<li class="menu-item" v-if='isShow'><a href="javascript:;" @click="menuShow"><transfer /></a></li>
-				</ul>
-				<div class="menu-title" v-if='!isShow'>我的音乐</div>
-				<ul class="menu-items" v-if='!isShow'>
-					<li class="menu-item"><musicBox /><span>本地音乐</span></li>
-					<li class="menu-item"><download /><span>下载管理</span></li>
-					<li class="menu-item"><clock /><span>最近播放</span></li>
-					<li class="menu-item"><cloud /><span>我的音乐云盘</span></li>
-					<li class="menu-item"><radio /><span>我的电台</span></li>
-					<li class="menu-item"><collect /><span>我的收藏</span></li>
-				</ul>
-				<div class="menu-title" v-if='!isShow'>创建的歌单 <plusCircle /></div>
-				<ul class="menu-items" v-if='!isShow'>
-					<li class="menu-item"><heart /><span>我喜欢的音乐</span></li>
-					<li class="menu-item" v-for='s in songSheet'><headphone /><span>{{s.sheetName}}</span></li>
-				</ul>
+		<div class="player-main">
+			<div class="left-bar" :class="{'indent-bar': isShow}">
+				<div class="menu-indent"><a href="javascript:;" @click="menuIndent"><MenuList /></a></div>
+				<div class="menu-panel">
+					<ul class="menu-items">
+						<router-link to="/index" tag="li" class="menu-item"><magnify /><span>搜索</span></router-link>
+						<router-link to="/show" tag="li" class="menu-item"><music /><span>发现音乐</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><playBox /><span>MV</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><friends /><span>朋友</span></router-link>
+						<li class="menu-item" v-if='isShow'><a href="javascript:;" @click="menuShow"><transfer /></a></li>
+					</ul>
+					<div class="menu-title" v-if='!isShow'>我的音乐</div>
+					<ul class="menu-items" v-if='!isShow'>
+						<router-link to="" tag="li" class="menu-item"><musicBox /><span>本地音乐</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><download /><span>下载管理</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><clock /><span>最近播放</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><cloud /><span>我的音乐云盘</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><radio /><span>我的电台</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><collect /><span>我的收藏</span></router-link>
+					</ul>
+					<div class="menu-title" v-if='!isShow'>创建的歌单 <plusCircle /></div>
+					<ul class="menu-items" v-if='!isShow'>
+						<router-link to="" tag="li" class="menu-item"><heart /><span>我喜欢的音乐</span></router-link>
+						<router-link to="" tag="li" class="menu-item" v-for='s in songSheet' :key="s.id"><headphone /><span>{{s.sheetName}}</span></router-link>
+					</ul>
+				</div>
+				<div class="user-panel">
+					<i class="avatar"></i>
+					<span class="user-name">图图也叫小卷毛</span>
+					<a href="javascript:;" class="email"><email /></a>
+					<a href="javascript:;" class="setting"><setting /></a>
+				</div>
 			</div>
-			<div class="user-panel">
-				<i class="avatar"></i>
-				<span class="user-name">图图也叫小卷毛</span>
-				<a href="javascript:;" class="email"><email /></a>
-				<a href="javascript:;" class="setting"><setting /></a>
+			<div class="container">
+				<router-view></router-view>
 			</div>
 		</div>
 		<div class="play-panel">
@@ -50,9 +55,9 @@
 					</p>
 				</div>
 				<div class="progress-wrap">
-					adsfas
+					<player :playUrl="songUrl"></player>
 				</div>
-				<audio><source src="./assets/上海音乐学院学生 - 东极岛岛歌.mp3"type="audio/mpeg" /></audio>
+				<!-- <audio controls><source src="./assets/dongjidao.mp3" type="audio/mpeg" /></audio> -->
 			</div>
 			<div class="play-setting-wrap">
 				<a href="javascript:;"><heart /></a>
@@ -61,7 +66,6 @@
 				<a href="javascript:;"><playList /></a>
 			</div>
 		</div>
-		<router-view></router-view>
 	</div>
 </template>
 
@@ -90,6 +94,7 @@ import pause from 'icons/pause-circle'
 import loop from 'icons/loop'
 import playList from 'icons/playlist-play'
 import volume from 'icons/volume-high'
+import player from './components/common/player'
 
 export default {
 	name: 'app',
@@ -105,7 +110,8 @@ export default {
 					sheetName: '乱·收'
 				}
 			],
-			isShow: false
+			isShow: false,
+			songUrl: ''
 		}
 	},
 	components:{
@@ -133,6 +139,7 @@ export default {
 		loop,
 		playList,
 		volume,
+		player,
 	},
 	methods: {
 		menuIndent(){
@@ -168,142 +175,146 @@ export default {
 		background-color: #cf2e2e;
 	}
 
-	.left-bar{
-		width: 1.95rem;
+	.player-main{
+		display: flex;
 		height: 5.35rem;
-		background-color: #f3f3f5;
-		border-right: $border;
-		transition: width 0.5s ease;
-		.material-design-icon{
-			width: .18rem;
-			height: .18rem;
-			color: #7e7e7e;
-			svg{
+		.left-bar{
+			width: 1.95rem;
+			height: 5.35rem;
+			background-color: #f3f3f5;
+			border-right: $border;
+			transition: width 0.5s ease;
+			.material-design-icon{
 				width: .18rem;
 				height: .18rem;
-				fill: #7e7e7e;
-			}
-		}
-		.menu-indent{
-			display: flex;
-			align-items: center;
-			width: 100%;
-			height: .45rem;
-			line-height: .45rem;
-			padding-left: .15rem;
-			box-sizing: border-box;
-		}
-		.menu-panel{
-			width: 100%;
-			height: 4.3rem;
-			overflow-y: auto;
-			.menu-title{
-				position: relative;
-				font-size: .12rem;
-				color: #aaaaab;
-				width: 100%;
-				height: .26rem;
-				line-height: .26rem;
-				box-sizing: border-box;
-				padding-left: .15rem;
-				margin-top: .2rem;
-				.material-design-icon{
-					position: absolute;
-					right: .2rem;
-					top: 0.045rem
+				color: #7e7e7e;
+				svg{
+					width: .18rem;
+					height: .18rem;
+					fill: #7e7e7e;
 				}
 			}
-			.menu-items{
-				.menu-item{
-					display: flex;
+			.menu-indent{
+				display: flex;
+				align-items: center;
+				width: 100%;
+				height: .45rem;
+				line-height: .45rem;
+				padding-left: .15rem;
+				box-sizing: border-box;
+			}
+			.menu-panel{
+				width: 100%;
+				height: 4.3rem;
+				overflow-y: auto;
+				.menu-title{
+					position: relative;
+					font-size: .12rem;
+					color: #aaaaab;
+					width: 100%;
+					height: .26rem;
+					line-height: .26rem;
 					box-sizing: border-box;
 					padding-left: .15rem;
-					width: 100%;
-					height: .4rem;
-					line-height: .4rem;
-					color: #333;
-					&:hover{
-						background-color: #e8e8eb;
+					margin-top: .2rem;
+					.material-design-icon{
+						position: absolute;
+						right: .2rem;
+						top: 0.045rem
 					}
-					span{
-						font-size: .14rem;
-						display: inline-block;
-						margin-left: .15rem;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						cursor: pointer;
+				}
+				.menu-items{
+					.menu-item{
+						display: flex;
+						box-sizing: border-box;
+						padding-left: .15rem;
+						width: 100%;
+						height: .4rem;
+						line-height: .4rem;
+						color: #333;
+						&:hover{
+							background-color: #e8e8eb;
+						}
+						span{
+							font-size: .14rem;
+							display: inline-block;
+							margin-left: .15rem;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							cursor: pointer;
+						}
 					}
 				}
 			}
-		}
-		.user-panel{
-			display: flex;
-			width: 100%;
-			height: 0.6rem;
-			line-height: 0.6rem;
-			align-items: center;
-			border-top: $border;
-			.avatar{
-				margin: 0 .1rem;
-				width: .3rem;
-				height: .3rem;
-				border-radius: 50%;
-				background: url("./assets/images/account.png") center no-repeat;
-				background-size: contain;
-			}
-			.user-name{
-				display: inline-block;
-				margin-right: .15rem;
-				width: .7rem;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-			a{
+			.user-panel{
 				display: flex;
-			}
-			.email{
-				margin-right: .2rem;
-			}
-		}
-	}
-
-	.indent-bar{
-		width: .45rem;
-		transition: width 0.5s ease;
-		.menu-panel{
-			height: 3.6rem;
-			.menu-items{
-				.menu-item{
-					padding: .13rem;
-					span{
-						display: none;
-					}
-				}
-			}
-		}
-		.user-panel{
-			height: auto;
-			flex-direction: column;
-			justify-content: center;
-			padding-top: .15rem;
-			.avatar{
-				margin-bottom: .1rem;
-			}
-			.user-name{
-				display: none;
-			}
-			a{
-				display: flex;
-				box-sizing: border-box;
-				padding-left: .13rem;
 				width: 100%;
-				height: .35rem;
-				line-height: .35rem;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				align-items: center;
+				border-top: $border;
+				.avatar{
+					margin: 0 .1rem;
+					width: .3rem;
+					height: .3rem;
+					border-radius: 50%;
+					background: url("./assets/images/account.png") center no-repeat;
+					background-size: contain;
+				}
+				.user-name{
+					display: inline-block;
+					margin-right: .15rem;
+					width: .7rem;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+				a{
+					display: flex;
+				}
+				.email{
+					margin-right: .2rem;
+				}
 			}
-			.email{
-				margin-right: 0;
+		}
+		
+		.indent-bar{
+			width: .45rem;
+			transition: width 0.5s ease;
+			.menu-panel{
+				height: 3.6rem;
+				.menu-items{
+					.menu-item{
+						padding: .13rem;
+						span{
+							display: none;
+						}
+					}
+				}
+			}
+			.user-panel{
+				height: auto;
+				flex-direction: column;
+				justify-content: center;
+				padding-top: .15rem;
+				.avatar{
+					margin-bottom: .1rem;
+				}
+				.user-name{
+					display: none;
+				}
+				a{
+					display: flex;
+					box-sizing: border-box;
+					padding-left: .13rem;
+					width: 100%;
+					height: .35rem;
+					line-height: .35rem;
+				}
+				.email{
+					margin-right: 0;
+				}
 			}
 		}
 	}

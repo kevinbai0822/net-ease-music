@@ -13,7 +13,8 @@ module.exports = {
     video: 'src',
     source: 'src',
     img: 'src',
-    image: 'xlink:href'
+    image: 'xlink:href',
+    audio: 'src'
   },
   'scss': 'style-loader!css-loader!sass-loader'
 }

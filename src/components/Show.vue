@@ -1,6 +1,6 @@
 <template>
-	<div class="music-wrap" id="app">
-		<div class="music-header">sdfsldjiasjo</div>
+	<div class="" id="">
+		<div class="music-header">我的世界</div>
 	</div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import './assets/base/reset';
-@import './assets/base/base';
-@import './assets/base/variable';
+// @import './assets/base/reset';
+// @import './assets/base/base';
+// @import './assets/base/variable';
 
 </style>
