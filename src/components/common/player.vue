@@ -1,7 +1,7 @@
 <template>
     <div class="player-wrap">
         <audio controls>
-            <source :src="playUrl" type="audio/mpeg"/>
+            <source :src="playList[0].url" type="audio/mpeg"/>
         </audio>
     </div>
 </template>
@@ -9,8 +9,9 @@
 export default {
     name: 'player',
     props: {
-        playUrl: {
-            type: String
+        playList: {
+            type: Array,
+            twoWay: true
         }
     },
     data() {
@@ -19,7 +20,7 @@ export default {
         }
     },
     mounted(){
-        console.log(this.playUrl)
+        console.log(this.playList)
     }
 }
 </script>

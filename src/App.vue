@@ -55,7 +55,7 @@
 					</p>
 				</div>
 				<div class="progress-wrap">
-					<player :playUrl="songUrl"></player>
+					<player :playList="songList"></player>
 				</div>
 				<!-- <audio controls><source src="./assets/dongjidao.mp3" type="audio/mpeg" /></audio> -->
 			</div>
@@ -111,7 +111,12 @@ export default {
 				}
 			],
 			isShow: false,
-			songUrl: ''
+			songList: [
+				{
+					name: 'haha',
+					url: '/static/东极岛岛歌.mp3'
+				}
+			]
 		}
 	},
 	components:{
