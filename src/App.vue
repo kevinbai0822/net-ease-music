@@ -391,7 +391,8 @@ export default {
 				}
 			}
 			.progress-wrap{
-				margin-top: .1rem;
+				margin-top: .05rem;
+				width: 100%;
 			}
 		}
 		.play-setting-wrap{
