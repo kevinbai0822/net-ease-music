@@ -31,7 +31,7 @@
                     <div class="player-handle-wrap">
                         <div class="player-duration" ref='progressBar'></div>
                         <div class="played-duration" :style="{width: playBarWid + '%'}"></div>
-                        <div class="player-slider" :style="{left: playBarWid + '%'}"></div>
+                        <div class="player-slider" @mousedown="sliderDown"></div>
                     </div>
                     <audio ref='audio' @timeupdate="songPlaying">
                         <source :src="playList[0].url" type="audio/mpeg" />
@@ -82,6 +82,7 @@ export default {
             isEnd: Boolean,
             proBarWid: null,    //进度条长度
             playBarWid: null,   //播放条长度
+            playSlider: Object
         }
     },
     components: {
@@ -98,6 +99,7 @@ export default {
         this.player = this.$refs.audio
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
+        this.playSlider = document.querySelector(".player-slider")
     },
     methods: {
         formatTime(number) {
@@ -119,9 +121,10 @@ export default {
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
             this.playBarWid = this.player.currentTime / this.player.duration * 100
+            this.playSlider.style.left = this.playBarWid + '%'
         },
-        songSlider(){
-            
+        sliderDown(){
+            let left = this.playSlider.style.left
         }
     },
     watch: {
