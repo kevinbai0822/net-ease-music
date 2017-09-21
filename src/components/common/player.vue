@@ -105,6 +105,10 @@ export default {
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
+        let that = this
+        document.addEventListener('mouseup', function(){
+            that.sliderUp(event)
+        })
     },
     methods: {
         formatTime(number) {
@@ -129,6 +133,9 @@ export default {
                 this.playBarWid = this.player.currentTime / this.player.duration * 100
                 this.playSlider.style.left = this.playBarWid + '%'
             }
+            if(this.player.ended){
+                this.isPlay = true
+            }
         },
         sliderDown(e){
             this.isSlider = false
@@ -137,8 +144,6 @@ export default {
             let x = e.pageX || e.clientX + scrollX
             this.startX = x
             this.curLeft = (this.playSlider.style.left.replace("%",""))/100
-
-            this.player.currentTime = this.player.currentTime + 10000
         },
         sliderMove(e){
             e.stopPropagation()
@@ -149,14 +154,19 @@ export default {
                 let distance = (x - this.startX)/this.proBarWid + this.curLeft
                 if(distance>=0 && distance<=1){
                     this.newLeft = distance * 100 + '%'
+                    this.playBarWid = distance * 100
                     this.playSlider.style.left = this.newLeft
                 }
             }
         },
         sliderUp(e){
             e.stopPropagation()
+            this.isSlider = true
             this.startX = null
             this.playSlider.style.left = this.newLeft
+            if(this.newLeft){
+                this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
+            }
         }
     },
     watch: {
@@ -175,6 +185,7 @@ export default {
     width: 100%;
     height: .63rem;
     border-top: $border;
+    user-select: none;
     .album-cover {
         width: .63rem;
         height: .63rem;
@@ -273,7 +284,7 @@ export default {
                         transform: translate3d(-50%, -50%, 0);
                         -webkit-transform-origin: center;
                         transform-origin: center;
-                        transition: all .3s ease;
+                        // transition: all .3s ease;
                         width: 12px;
                         height: 12px;
                         background: #fff;
