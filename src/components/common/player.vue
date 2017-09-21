@@ -28,7 +28,7 @@
             </div>
             <div class="progress-wrap">
                 <div class="player-wrap">
-                    <div class="player-handle-wrap">
+                    <div class="player-handle-wrap" @mousemove="sliderMove" @mouseup="sliderUp">
                         <div class="player-duration" ref='progressBar'></div>
                         <div class="played-duration" :style="{width: playBarWid + '%'}"></div>
                         <div class="player-slider" @mousedown="sliderDown"></div>
@@ -82,7 +82,12 @@ export default {
             isEnd: Boolean,
             proBarWid: null,    //进度条长度
             playBarWid: null,   //播放条长度
-            playSlider: Object
+            playSlider: Object, //滑块dom
+            isSlider: true, //是否处于滑动状态,true为自然播放状态
+            startX: null,
+            curLeft: null,  //点击滑块时移动的距离
+            newLeft: null,
+            newTime: null,  //滑动之后新的时间
         }
     },
     components: {
@@ -120,11 +125,38 @@ export default {
         },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
-            this.playBarWid = this.player.currentTime / this.player.duration * 100
-            this.playSlider.style.left = this.playBarWid + '%'
+            if(this.isSlider){
+                this.playBarWid = this.player.currentTime / this.player.duration * 100
+                this.playSlider.style.left = this.playBarWid + '%'
+            }
         },
-        sliderDown(){
-            let left = this.playSlider.style.left
+        sliderDown(e){
+            this.isSlider = false
+            e.stopPropagation()
+            let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+            let x = e.pageX || e.clientX + scrollX
+            this.startX = x
+            this.curLeft = (this.playSlider.style.left.replace("%",""))/100
+
+            this.player.currentTime = this.player.currentTime + 10000
+        },
+        sliderMove(e){
+            e.stopPropagation()
+            this.playBarWid = null
+            let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+            let x = e.pageX || e.clientX + scrollX
+            if (this.startX){
+                let distance = (x - this.startX)/this.proBarWid + this.curLeft
+                if(distance>=0 && distance<=1){
+                    this.newLeft = distance * 100 + '%'
+                    this.playSlider.style.left = this.newLeft
+                }
+            }
+        },
+        sliderUp(e){
+            e.stopPropagation()
+            this.startX = null
+            this.playSlider.style.left = this.newLeft
         }
     },
     watch: {
