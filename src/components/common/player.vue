@@ -107,7 +107,7 @@ export default {
         this.playSlider = document.querySelector(".player-slider")
         let that = this
         document.addEventListener('mouseup', function(){
-            that.sliderUp(event)
+            // that.sliderUp(event)
         })
     },
     methods: {
@@ -172,6 +172,7 @@ export default {
             if(this.newLeft){
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
+            console.log(this.player.currentTime)
         }
     },
     watch: {
