@@ -127,6 +127,9 @@ export default {
             this.player.pause()
             this.isPlay = !this.isPlay
         },
+        playerEnd(){
+            this.player.currentTime = 0
+        },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
             if(this.isSlider){
@@ -135,6 +138,7 @@ export default {
             }
             if(this.player.ended){
                 this.isPlay = true
+                this.playerEnd()
             }
         },
         sliderDown(e){
@@ -156,6 +160,7 @@ export default {
                     this.newLeft = distance * 100 + '%'
                     this.playBarWid = distance * 100
                     this.playSlider.style.left = this.newLeft
+                    this.songCurrentTime = this.formatTime(this.player.duration * distance)
                 }
             }
         },
