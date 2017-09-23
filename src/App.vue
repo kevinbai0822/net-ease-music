@@ -106,8 +106,12 @@ export default {
 			isShow: false,
 			songList: [
 				{
-					name: 'haha',
-					url: '/static/东极岛岛歌.mp3'
+					name: '东极岛',
+					url: './static/东极岛岛歌.mp3'
+				},
+				{
+					name: '机动战士',
+					url: './static/FIGHT.mp3'
 				}
 			]
 		}

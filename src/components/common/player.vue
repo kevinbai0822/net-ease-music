@@ -34,7 +34,7 @@
                         <div class="player-slider" @mousedown="sliderDown"></div>
                     </div>
                     <audio ref='audio' @timeupdate="songPlaying">
-                        <source :src="playList[0].url" type="audio/mpeg" />
+                        <source :src="playList[1].url" type="audio/mpeg" />
                     </audio>
                 </div>
             </div>
@@ -88,6 +88,7 @@ export default {
             curLeft: null,  //点击滑块时移动的距离
             newLeft: null,
             newTime: null,  //滑动之后新的时间
+            playUrl: '',
         }
     },
     components: {
@@ -119,6 +120,9 @@ export default {
             return minute + ':' + second
         },
         playerPlay() {
+            // let music = this.playList
+            // console.log(music)
+            //使用迭代器 genrator函数
             this.player.play()
             this.isPlay = !this.isPlay
             this.songDuration = this.formatTime(this.player.duration)
