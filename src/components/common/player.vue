@@ -11,7 +11,7 @@
             <a href="javascript:;" v-else  @click='playerPause' class="play">
                 <pause />
             </a>
-            <a href="javascript:;" class="next">
+            <a href="javascript:;" @click='playNext' class="next">
                 <next />
             </a>
         </div>
@@ -33,8 +33,8 @@
                         <div class="played-duration" :style="{width: playBarWid + '%'}"></div>
                         <div class="player-slider" @mousedown="sliderDown"></div>
                     </div>
-                    <audio ref='audio' @timeupdate="songPlaying">
-                        <source :src="playList[1].url" type="audio/mpeg" />
+                    <audio ref='audio' autoplay='' preload="true" @timeupdate="songPlaying">
+                        <source :src="playUrl" type="audio/mpeg" />
                     </audio>
                 </div>
             </div>
@@ -89,6 +89,7 @@ export default {
             newLeft: null,
             newTime: null,  //滑动之后新的时间
             playUrl: '',
+            playIndex: null,    //播放位置
         }
     },
     components: {
@@ -120,9 +121,15 @@ export default {
             return minute + ':' + second
         },
         playerPlay() {
-            // let music = this.playList
-            // console.log(music)
-            //使用迭代器 genrator函数
+            // if(this.playIndex == null){
+            //     this.playIndex = 0
+            //     this.playUrl = this.playList[0].url
+            //     this.player.play()
+            // }else if(this.playIndex != null){
+            //     this.playIndex += 1
+            //     this.playUrl = this.playList[this.playIndex].url
+            // }
+            // this.player.load()
             this.player.play()
             this.isPlay = !this.isPlay
             this.songDuration = this.formatTime(this.player.duration)
@@ -133,6 +140,19 @@ export default {
         },
         playerEnd(){
             this.player.currentTime = 0
+        },
+        playNext(){
+            // if(this.playIndex == null){
+            //     this.playIndex = 0
+            //     this.playUrl = this.playList[0]
+            //     this.player.load()
+            //     this.player.play()
+            // }else if(this.playIndex != null){
+            //     this.playIndex += 1
+            //     this.playUrl = this.playList[this.playIndex]
+            //     this.player.load()
+            //     this.player.play()
+            // }
         },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
@@ -177,7 +197,7 @@ export default {
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
             console.log(this.player.currentTime)
-        }
+        },
     },
     watch: {
         
