@@ -38,34 +38,7 @@
 				<router-view></router-view>
 			</div>
 		</div>
-		<player :playList="songList"></player>
-		<!-- <div class="play-panel">
-			<div class="album-cover"></div>
-			<div class="play-operate">
-				<a href="javascript:;" class="prev"><prev /></a>
-				<a href="javascript:;" class="play"><play /></a>
-				<a href="javascript:;" class="next"><next /></a>
-			</div>
-			<div class="play-msg">
-				<div class="song-wrap">
-					<p class="song-msg">
-						<span class="song-name">心要野</span> - <span class="songer-name">后海大鲨鱼</span>
-					</p>
-					<p class="play-time-msg">
-						<span class="play-time">00:00</span> / <span class="song-time">04:36</span>
-					</p>
-				</div>
-				<div class="progress-wrap">
-					<player :playList="songList"></player>
-				</div>
-			</div>
-			<div class="play-setting-wrap">
-				<a href="javascript:;"><heart /></a>
-				<a href="javascript:;"><loop /></a>
-				<a href="javascript:;"><volume /></a>
-				<a href="javascript:;"><playList /></a>
-			</div>
-		</div> -->
+		<player></player>
 	</div>
 </template>
 
@@ -103,17 +76,7 @@ export default {
 					sheetName: '乱·收'
 				}
 			],
-			isShow: false,
-			songList: [
-				{
-					name: '东极岛',
-					url: './static/东极岛岛歌.mp3'
-				},
-				{
-					name: '机动战士',
-					url: './static/FIGHT.mp3'
-				}
-			]
+			isShow: false
 		}
 	},
 	components:{

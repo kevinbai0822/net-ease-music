@@ -6,6 +6,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
 import router from './router'
+import {store} from './store/store'
 
 // Vue.use(VueTouch, {name: 'vue-touch'})
 Vue.use(Vuex)
