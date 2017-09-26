@@ -145,16 +145,16 @@ export default {
             this.$store.commit('playPrev')
             this.player.load()
             this.player.play()
-            let dura = this.formatTime(this.player.duration)
-            this.$store.commit('setDuration', dura)
+            // let dura = this.formatTime(this.player.duration)
+            // this.$store.commit('setDuration', dura)
         },
         next(){
             this.$store.commit('playNext')
             this.player.load()
             this.player.play()
-            console.log(this.player.canplay)
-            let dura = this.formatTime(this.player.duration)
-            this.$store.commit('setDuration', dura)
+            // console.log(this.player.canplay)
+            // let dura = this.formatTime(this.player.duration)
+            // this.$store.commit('setDuration', dura)
         },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
@@ -166,6 +166,8 @@ export default {
                 this.isPlay = true
                 this.playerEnd()
             }
+            let dura = this.formatTime(this.player.duration)
+            this.$store.commit('setDuration', dura)
         },
         sliderDown(e){
             this.isSlider = false
