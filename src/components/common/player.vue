@@ -2,7 +2,7 @@
     <div class="play-panel">
         <div class="album-cover"></div>
         <div class="play-operate">
-            <a href="javascript:;" class="prev">
+            <a href="javascript:;" @click='prev' class="prev">
                 <prev  />
             </a>
             <a href="javascript:;" v-if="isPlay"  @click='playerPlay' class="play">
@@ -18,12 +18,12 @@
         <div class="play-msg">
             <div class="song-wrap">
                 <p class="song-msg">
-                    <span class="song-name">东极岛岛歌</span> -
-                    <span class="songer-name">上海音乐学院学生</span>
+                    <span class="song-name">{{playList[playIndex].name}}</span> - 
+                    <span class="songer-name">{{playList[playIndex].author}}</span>
                 </p>
                 <p class="play-time-msg">
                     <span class="play-time">{{songCurrentTime}}</span> /
-                    <span class="song-time">{{songDuration}}</span>
+                    <span class="song-time">{{playDuration}}</span>
                 </p>
             </div>
             <div class="progress-wrap">
@@ -103,6 +103,9 @@ export default {
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
+        this.$store.commit('setUrl', this.playList[0].url)
+        // console.log(this.player.duration)
+        // this.$store.commit('setDuration', this.player.duration)
         let that = this
         document.addEventListener('mouseup', function(){
             // that.sliderUp(event)
@@ -113,6 +116,7 @@ export default {
             'playList',
             'playUrl',
             'playIndex',
+            'playDuration',
         ])
     },
     methods: {
@@ -125,9 +129,10 @@ export default {
         },
         playerPlay() {
             this.player.play()
-            this.$store.commit('setUrl', this.playList[0].url)
             this.isPlay = !this.isPlay
-            this.songDuration = this.formatTime(this.player.duration)
+            // this.songDuration = this.formatTime(this.player.duration)
+            let dura = this.formatTime(this.player.duration)
+            this.$store.commit('setDuration', dura)
         },
         playerPause() {
             this.player.pause()
@@ -136,9 +141,20 @@ export default {
         playerEnd(){
             this.player.currentTime = 0
         },
+        prev(){
+            this.$store.commit('playPrev')
+            this.player.load()
+            this.player.play()
+            let dura = this.formatTime(this.player.duration)
+            this.$store.commit('setDuration', dura)
+        },
         next(){
             this.$store.commit('playNext')
+            this.player.load()
             this.player.play()
+            console.log(this.player.canplay)
+            let dura = this.formatTime(this.player.duration)
+            this.$store.commit('setDuration', dura)
         },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
