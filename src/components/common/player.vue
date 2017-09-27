@@ -5,7 +5,7 @@
             <a href="javascript:;" @click='prev' class="prev">
                 <prev  />
             </a>
-            <a href="javascript:;" v-if="isPlay"  @click='playerPlay' class="play">
+            <a href="javascript:;" v-if="!isPlay"  @click='playerPlay' class="play">
                 <play />
             </a>
             <a href="javascript:;" v-else  @click='playerPause' class="play">
@@ -33,7 +33,7 @@
                         <div class="played-duration" :style="{width: playBarWid + '%'}"></div>
                         <div class="player-slider" @mousedown="sliderDown"></div>
                     </div>
-                    <audio ref='audio' preload="true" @timeupdate="songPlaying">
+                    <audio ref='audio' preload="true" @canplay="getDuration" @ended="playerEnd" @timeupdate="songPlaying">
                         <source :src="playUrl" type="audio/mpeg" />
                     </audio>
                 </div>
@@ -74,8 +74,7 @@ export default {
     data() {
         return {
             player: null,
-            isPlay: true,
-            songDuration: '00:00',
+            isPlay: false,
             songCurrentTime: '00:00',
             isEnd: Boolean,
             proBarWid: null,    //进度条长度
@@ -104,8 +103,6 @@ export default {
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
         this.$store.commit('setUrl', this.playList[0].url)
-        // console.log(this.player.duration)
-        // this.$store.commit('setDuration', this.player.duration)
         let that = this
         document.addEventListener('mouseup', function(){
             // that.sliderUp(event)
@@ -130,31 +127,33 @@ export default {
         playerPlay() {
             this.player.play()
             this.isPlay = !this.isPlay
-            // this.songDuration = this.formatTime(this.player.duration)
-            let dura = this.formatTime(this.player.duration)
-            this.$store.commit('setDuration', dura)
+            this.getDuration()
         },
         playerPause() {
             this.player.pause()
             this.isPlay = !this.isPlay
         },
         playerEnd(){
-            this.player.currentTime = 0
+            // this.player.currentTime = 0
+            this.next()
         },
         prev(){
             this.$store.commit('playPrev')
             this.player.load()
             this.player.play()
-            // let dura = this.formatTime(this.player.duration)
-            // this.$store.commit('setDuration', dura)
+            this.isPlay = true
         },
         next(){
-            this.$store.commit('playNext')
-            this.player.load()
-            this.player.play()
-            // console.log(this.player.canplay)
-            // let dura = this.formatTime(this.player.duration)
-            // this.$store.commit('setDuration', dura)
+            if(this.playIndex < this.playList.length - 1){
+                this.$store.commit('playNext')
+                this.player.load()
+                this.player.play()
+                this.isPlay = true
+            }
+        },
+        getDuration(){
+            let dura = this.formatTime(this.player.duration)
+            this.$store.commit('setDuration', dura)
         },
         songPlaying(){
             this.songCurrentTime = this.formatTime(this.player.currentTime)
@@ -162,12 +161,10 @@ export default {
                 this.playBarWid = this.player.currentTime / this.player.duration * 100
                 this.playSlider.style.left = this.playBarWid + '%'
             }
-            if(this.player.ended){
-                this.isPlay = true
-                this.playerEnd()
-            }
-            let dura = this.formatTime(this.player.duration)
-            this.$store.commit('setDuration', dura)
+            // if(this.player.ended){
+            //     this.isPlay = true
+            //     this.playerEnd()
+            // }
         },
         sliderDown(e){
             this.isSlider = false
@@ -200,7 +197,6 @@ export default {
             if(this.newLeft){
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
-            console.log(this.player.currentTime)
         },
     },
     watch: {

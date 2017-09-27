@@ -13,13 +13,13 @@ export const store = new Vuex.Store({
             },
             {
                 name: '机动战士',
-                author: '川井惠次',
+                author: '川井憲次',
                 url: './static/FIGHT.mp3'
             }
         ],
         playUrl: '',
         playIndex: 0,
-        playDuration: '00:00'
+        playDuration: '00:00',
     },
     getters: {
         playList: state => state.playList,
@@ -31,12 +31,16 @@ export const store = new Vuex.Store({
         setUrl: (state, url) => {state.playUrl = url},
         setDuration: (state, duration) => {state.playDuration = duration},
         playNext: (state) => {
-            state.playIndex += 1
-            state.playUrl = state.playList[state.playIndex].url
+            if(state.playIndex < state.playList.length - 1){
+                state.playIndex += 1
+                state.playUrl = state.playList[state.playIndex].url
+            }
         },
         playPrev: (state) => {
-            state.playIndex -= 1
-            state.playUrl = state.playList[state.playIndex].url
+            if(state.playIndex > 0){
+                state.playIndex -= 1
+                state.playUrl = state.playList[state.playIndex].url
+            }
         },
     }
 })
