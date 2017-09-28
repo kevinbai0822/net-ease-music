@@ -134,7 +134,6 @@ export default {
             this.isPlay = !this.isPlay
         },
         playerEnd(){
-            // this.player.currentTime = 0
             this.next()
         },
         prev(){
