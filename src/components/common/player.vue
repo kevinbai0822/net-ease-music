@@ -33,7 +33,7 @@
                         <div class="played-duration" :style="{width: playBarWid + '%'}"></div>
                         <div class="player-slider" @mousedown="sliderDown"></div>
                     </div>
-                    <audio ref='audio' preload="true" @canplay="getDuration" @ended="playerEnd" @timeupdate="songPlaying">
+                    <audio ref='audio' :loop='isSingle' preload="true" @canplay="getDuration" @ended="playerEnd" @timeupdate="songPlaying">
                         <source :src="playUrl" type="audio/mpeg" />
                     </audio>
                 </div>
@@ -43,7 +43,7 @@
             <a href="javascript:;">
                 <heart />
             </a>
-            <a href="javascript:;">
+            <a href="javascript:;" @click="switchModel">
                 <loop />
             </a>
             <a href="javascript:;">
@@ -85,6 +85,7 @@ export default {
             curLeft: null,  //点击滑块时移动的距离
             newLeft: null,
             newTime: null,  //滑动之后新的时间
+            isSingle: false,
         }
     },
     components: {
@@ -114,6 +115,7 @@ export default {
             'playUrl',
             'playIndex',
             'playDuration',
+            'playModel',
         ])
     },
     methods: {
@@ -143,12 +145,12 @@ export default {
             this.isPlay = true
         },
         next(){
-            if(this.playIndex < this.playList.length - 1){
-                this.$store.commit('playNext')
-                this.player.load()
-                this.player.play()
-                this.isPlay = true
-            }
+            // if(this.playIndex < this.playList.length - 1){
+            //     }
+            this.$store.commit('playNext')
+            this.player.load()
+            this.player.play()
+            this.isPlay = true
         },
         getDuration(){
             let dura = this.formatTime(this.player.duration)
@@ -164,6 +166,24 @@ export default {
             //     this.isPlay = true
             //     this.playerEnd()
             // }
+        },
+        switchModel(){
+            switch (this.playModel) {
+                case 'loop':
+                    this.$store.commit('setModel', 'order')
+                    break;
+                case 'order':
+                    this.$store.commit('setModel', 'single')
+                    this.isSingle = true
+                    break;
+                case 'single':
+                    this.$store.commit('setModel', 'random')
+                    this.isSingle = false
+                    break;
+                case 'random':
+                    this.$store.commit('setModel', 'loop')
+                    break;
+            }
         },
         sliderDown(e){
             this.isSlider = false
