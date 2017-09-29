@@ -31,6 +31,7 @@ export const store = new Vuex.Store({
         playIndex: 0,
         playDuration: '00:00',
         playModel: 'loop',
+        playVolume: '0.6'
     },
     getters: {
         playList: state => state.playList,
@@ -38,21 +39,24 @@ export const store = new Vuex.Store({
         playIndex: state => state.playIndex,
         playDuration:  state => state.playDuration,
         playModel: state => state.playModel,
+        playVolume: state => state.playVolume,
     },
     mutations: {    //定义方法促使试图更新，在组件的methods中提交
         setUrl: (state, url) => {state.playUrl = url},
         setModel: (state, model) => {state.playModel = model},
         setDuration: (state, duration) => {state.playDuration = duration},
         playNext: (state) => {
-            if(state.playIndex < state.playList.length - 1){
-                state.playIndex += 1
-            }
-            if(state.playModel === 'loop'){
-                if(state.playIndex = state.playList.length - 1){
-                    state.playIndex = 0
+            if(state.playModel === 'order'){
+                if(state.playIndex < state.playList.length - 1){
+                    state.playIndex += 1
+                }
+            }else if(state.playModel === 'loop'){
+                if(state.playIndex === state.playList.length - 1){
+                    state.playIndex = 0                   
+                }else if(state.playIndex < state.playList.length - 1){
+                    state.playIndex += 1
                 }
             }else if(state.playModel === 'random'){
-                // console.log('suiji')
                 state.playIndex = Math.floor((Math.random() * state.playList.length))
             }
             state.playUrl = state.playList[state.playIndex].url

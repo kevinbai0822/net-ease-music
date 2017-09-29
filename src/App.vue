@@ -6,8 +6,8 @@
 				<div class="menu-indent"><a href="javascript:;" @click="menuIndent"><MenuList /></a></div>
 				<div class="menu-panel">
 					<ul class="menu-items">
-						<router-link to="/index" tag="li" class="menu-item"><magnify /><span>搜索</span></router-link>
-						<router-link to="/common/player" tag="li" class="menu-item"><music /><span>发现音乐</span></router-link>
+						<router-link to="" tag="li" class="menu-item"><magnify /><span>搜索</span></router-link>
+						<router-link to="/index" tag="li" class="menu-item"><music /><span>发现音乐</span></router-link>
 						<router-link to="" tag="li" class="menu-item"><playBox /><span>MV</span></router-link>
 						<router-link to="" tag="li" class="menu-item"><friends /><span>朋友</span></router-link>
 						<li class="menu-item" v-if='isShow'><a href="javascript:;" @click="menuShow"><transfer /></a></li>
@@ -113,6 +113,7 @@ export default {
 <style lang="scss">
 @import './assets/base/reset';
 @import './assets/base/base';
+@import './assets/base/common';
 @import './assets/base/variable';
 
 .music-wrap{
@@ -274,6 +275,11 @@ export default {
 					margin-right: 0;
 				}
 			}
+		}
+
+		.container{
+			padding: 0.2rem 0.3rem;
+			width: 100%;
 		}
 	}
 }
