@@ -130,7 +130,7 @@ export default {
             this.player.play()
             this.isPlay = !this.isPlay
             this.getDuration()
-            this.player.volume = 0.5
+            this.player.volume = 1
         },
         playerPause() {
             this.player.pause()
