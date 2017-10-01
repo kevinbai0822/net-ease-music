@@ -49,6 +49,7 @@
             <a href="javascript:;">
                 <volume />
             </a>
+            <volumeBox></volumeBox>
             <a href="javascript:;">
                 <playList />
             </a>
@@ -65,6 +66,7 @@ import playList from 'icons/playlist-play'
 import volume from 'icons/volume-high'
 import heart from 'icons/heart-outline'
 import {mapMutations, mapGetters} from 'vuex'
+import volumeBox from './volume'
 
 export default {
     name: 'player',
@@ -97,6 +99,7 @@ export default {
         playList,
         volume,
         heart,
+        volumeBox,
     },
     mounted() {
         this.player = this.$refs.audio
