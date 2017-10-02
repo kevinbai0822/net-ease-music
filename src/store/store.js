@@ -45,6 +45,7 @@ export const store = new Vuex.Store({
         setUrl: (state, url) => {state.playUrl = url},
         setModel: (state, model) => {state.playModel = model},
         setDuration: (state, duration) => {state.playDuration = duration},
+        setVolume: (state, volume) => {state.playVolume = volume},
         playNext: (state) => {
             if(state.playModel === 'order'){
                 if(state.playIndex < state.playList.length - 1){

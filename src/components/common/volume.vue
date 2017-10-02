@@ -8,7 +8,20 @@
     </div>
 </template>
 <script>
+import {mapMutations, mapGetters} from 'vuex'
+export default {
+    name: 'volume',
+    data(){
+        return{
 
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'playVolume'
+        ])
+    }
+}
 </script>
 <style lang='scss'>
 @import '../../assets/base/variable.scss';
