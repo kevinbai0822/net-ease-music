@@ -3,7 +3,7 @@
         <div class="volume-panel">
             <div class="volume-total"></div>
             <div class="volume-current"></div>
-            <div class="volume-slider"></div>
+            <div class="volume-slider" @mousedown="voStart"></div>
         </div>
     </div>
 </template>
@@ -13,13 +13,22 @@ export default {
     name: 'volume',
     data(){
         return{
-
+            startX: null
         }
     },
     computed: {
         ...mapGetters([
             'playVolume'
         ])
+    },
+    methods: {
+        voStart(e){
+            e.stopPropagation()
+            let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+            let x = e.pageX || e.clientX + scrollX
+            this.startX = x
+            console.log(this.startX)
+        }
     }
 }
 </script>
