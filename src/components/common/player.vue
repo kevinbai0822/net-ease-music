@@ -46,10 +46,10 @@
             <a href="javascript:;" @click="switchModel">
                 <loop />
             </a>
-            <a href="javascript:;">
+            <a href="javascript:;" @click='isVolume = !isVolume'>
                 <volume />
             </a>
-            <volumeBox></volumeBox>
+            <volumeBox v-if='isVolume'></volumeBox>
             <a href="javascript:;">
                 <playList />
             </a>
@@ -88,6 +88,7 @@ export default {
             newLeft: null,
             newTime: null,  //滑动之后新的时间
             isSingle: false,
+            isVolume: false
         }
     },
     components: {
@@ -119,6 +120,7 @@ export default {
             'playIndex',
             'playDuration',
             'playModel',
+            'playVolume'
         ])
     },
     methods: {
@@ -166,10 +168,7 @@ export default {
                 this.playBarWid = this.player.currentTime / this.player.duration * 100
                 this.playSlider.style.left = this.playBarWid + '%'
             }
-            // if(this.player.ended){
-            //     this.isPlay = true
-            //     this.playerEnd()
-            // }
+            this.player.volume = this.playVolume
         },
         switchModel(){
             switch (this.playModel) {

@@ -1,9 +1,9 @@
 <template>
     <div class="volume-wrap">
-        <div class="volume-panel">
-            <div class="volume-total"></div>
-            <div class="volume-current"></div>
-            <div class="volume-slider" @mousedown="voStart"></div>
+        <div class="volume-panel" @mousemove="voMove" @mouseup="voUp">
+            <div class="volume-total" ref='vTotal'></div>
+            <div class="volume-current" :style='{width: voBarWid + "%"}'></div>
+            <div class="volume-slider" ref='vSlider' @mousedown="voStart"></div>
         </div>
     </div>
 </template>
@@ -13,7 +13,13 @@ export default {
     name: 'volume',
     data(){
         return{
-            startX: null
+            voSlider: null,
+            isSlider: false,
+            startX: null,
+            voWidth: null,
+            curLeft: null,
+            voBarWid: null,
+            newLeft: null,
         }
     },
     computed: {
@@ -21,13 +27,44 @@ export default {
             'playVolume'
         ])
     },
+    mounted(){
+        this.voWidth = this.$refs.vTotal.offsetWidth
+        this.voSlider = document.querySelector('.volume-slider')
+        this.voBarWid = this.playVolume * 100
+        this.voSlider.style.left = this.playVolume * 100 + '%'
+    },
     methods: {
         voStart(e){
+            this.isSlider = true
             e.stopPropagation()
             let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
             let x = e.pageX || e.clientX + scrollX
             this.startX = x
-            console.log(this.startX)
+            this.curLeft = (this.voSlider.style.left.replace("%",""))/100
+        },
+        voMove(e){
+            e.stopPropagation()
+            this.voBarWid = null
+            let scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+            let x = e.pageX || e.clientX + scrollX
+            let _that = this
+            if(this.startX){
+                let minus = (x - this.startX)/this.voWidth + this.curLeft
+                if(minus>=0 && minus<=1){
+                    this.newLeft = minus * 100 + '%'
+                    this.voBarWid = minus * 100
+                    this.voSlider.style.left = this.newLeft
+                    this.$store.commit('setVolume', minus)
+                }
+            }
+        },
+        voUp(e){
+            e.stopPropagation()
+            this.isSlider = false
+            this.startX = null
+            this.voSlider.style.left = this.newLeft
+            let curVolume = this.newLeft.replace("%","") / 100
+            this.$store.commit('setVolume', curVolume)
         }
     }
 }

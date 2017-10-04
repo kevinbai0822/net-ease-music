@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
         playIndex: 0,
         playDuration: '00:00',
         playModel: 'loop',
-        playVolume: '0.6'
+        playVolume: 0.6
     },
     getters: {
         playList: state => state.playList,
