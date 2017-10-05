@@ -1,5 +1,6 @@
 <template>
     <div class="volume-wrap">
+        <!-- <volume></volume> -->
         <div class="volume-panel" @mousemove="voMove" @mouseup="voUp">
             <div class="volume-total" ref='vTotal'></div>
             <div class="volume-current" :style='{width: voBarWid + "%"}'></div>
@@ -8,6 +9,7 @@
     </div>
 </template>
 <script>
+import volume from 'icons/volume-high'
 import {mapMutations, mapGetters} from 'vuex'
 export default {
     name: 'volume',
@@ -21,6 +23,9 @@ export default {
             voBarWid: null,
             newLeft: null,
         }
+    },
+    components: {
+        volume,
     },
     computed: {
         ...mapGetters([
@@ -74,6 +79,8 @@ export default {
 
 .volume-wrap {
     position: absolute;
+    // display: flex;
+    // align-items: center;
     padding: 0 .12rem;
     top: -0.45rem;
     right: .1rem;
