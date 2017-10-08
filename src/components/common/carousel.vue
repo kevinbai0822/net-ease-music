@@ -1,7 +1,9 @@
 <template>
     <div class="carousel-wrap">
-        <div class="carousel-panel" v-for="img in imgList" :key="img.id">
-            <img :src="img.src" alt="">
+        <div class="carousel-panel">
+            <div class="carousel-items" v-for="img in imgList" :key="img.id">
+                <img :src="img.src" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -31,14 +33,15 @@ export default {
 @import '../../assets/base/variable.scss';
 
 .carousel-wrap{
-    display: flex;
-    width: 100%;
     overflow: hidden;
     .carousel-panel{
-        width: 33.3333%;
-        flex-basis: 33.3333%;
-        img{
-            width: 100%;
+        display: flex;
+        width: 100%;
+        .carousel-items{
+            flex: 0 0 33.3333%;
+            img{
+                width: 100%;
+            }
         }
     }
 }

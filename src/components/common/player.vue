@@ -1,6 +1,6 @@
 <template>
     <div class="play-panel">
-        <div class="album-cover"></div>
+        <div class="album-cover" :style='{background: "url("+ playList[playIndex].album +") center /cover no-repeat", backgroundSize: "cover"}'></div>
         <div class="play-operate">
             <a href="javascript:;" @click='prev' class="prev">
                 <prev  />
@@ -88,7 +88,7 @@ export default {
             newLeft: null,
             newTime: null,  //滑动之后新的时间
             isSingle: false,
-            isVolume: false
+            isVolume: false,
         }
     },
     components: {
@@ -241,7 +241,6 @@ export default {
     .album-cover {
         width: .63rem;
         height: .63rem;
-        background: url("../../assets/images/album1.jpg") center no-repeat;
         background-size: cover;
     }
     .play-operate {
