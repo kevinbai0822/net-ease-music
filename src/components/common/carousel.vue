@@ -5,7 +5,7 @@
                 <img :src="img.src" alt="">
             </div>
         </div>
-        <button @click='slider'>sdagbh</button>
+        <!-- <button @click='slider'>sdagbh</button> -->
     </div>
 </template>
 <script>
@@ -25,27 +25,28 @@ export default {
             twoWay: true
         }
     },
-    mounted(){
-        this.itemsNum = this.$refs.cPanel.childNodes.length
+    mounted() {
+        // this.itemsNum = this.$refs.cPanel.childNodes.length
     },
     components: {
 
     },
     methods: {
-        slider(){
-            if(this.isLoop){
-                let temp = this.imgList.shift()
-                this.slide = 0
-                this.imgList.push(temp)
-            }
+        slider() {
             // this.slide = -33.3333
-            // if(this.slideNum < this.itemsNum - 1){
-            //     this.slideNum++
-            //     this.slide = this.slideNum * -33.3333
-            // }else if(this.slideNum === this.itemsNum - 1){
-            //     this.slideNum = 0
-            //     this.slide = 0
-            // }
+            this.itemsNum = this.imgList.length
+            console.log(this.itemsNum)
+            if (this.slideNum < this.itemsNum - 1) {
+                this.slideNum++
+                this.slide = this.slideNum * -33.3333
+                if (this.isLoop) {
+                    let temp = this.imgList.shift()
+                    this.imgList.push(temp)
+                }
+            } else if (this.slideNum === this.itemsNum - 1) {
+                this.slideNum = 0
+                this.slide = 0
+            }
         }
     }
 }
@@ -53,20 +54,20 @@ export default {
 <style lang='scss'>
 @import '../../assets/base/variable.scss';
 
-.carousel-wrap{
-    &::-webkit-scrollbar{
+.carousel-wrap {
+    &::-webkit-scrollbar {
         display: none;
     }
     overflow-x: hidden;
-    .carousel-panel{
+    .carousel-panel {
         display: flex;
         width: 100%;
         align-items: flex-end;
         transition: all 1s ease;
-        .carousel-items{
+        .carousel-items {
             flex: 0 0 33.3333%;
             transform-origin: bottom;
-            img{
+            img {
                 width: 100%;
             }
         }

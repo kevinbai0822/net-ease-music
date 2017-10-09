@@ -9,10 +9,41 @@
         <div class="poster-wrap">
             <carousel :imgList='posterList'></carousel>
         </div>
+        <div class="personal-wrap">
+            <div class="personal-radio">
+                <i class="personal-icon">
+                    <radio></radio>
+                </i>
+                <div class="personal-content">
+                    <span class="content-name">私人FM</span>
+                    <span class="content-des">享受你的音乐专属推荐</span>
+                </div>
+            </div>
+            <div>
+                <i class="personal-icon">
+                    <span>09</span>
+                </i>
+                <div class="personal-content">
+                    <span class="content-name">每日歌曲推荐</span>
+                    <span class="content-des">根据你的口味生成</span>
+                </div>
+            </div>
+            <div>
+                <i class="personal-icon">
+                    <mucisBox></mucisBox>
+                </i>
+                <div class="personal-content">
+                    <span class="content-name">排行榜</span>
+                    <span class="content-des">最热音乐榜</span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
 import carousel from './common/carousel'
+import radio from 'icons/radio'
+import mucisBox from 'icons/music-box-outline'
 export default {
     name: 'index',
     data() {
@@ -40,7 +71,7 @@ export default {
                 }
             ],
             reValue: 0,
-            posterList:[
+            posterList: [
                 {
                     src: 'static/images/poster1.jpg'
                 },
@@ -58,34 +89,92 @@ export default {
     },
     components: {
         carousel,
+        radio,
+        mucisBox,
     }
 }
 </script>
 <style lang='scss'>
 @import '../assets/base/variable';
 
-.recommendation-wrap{
-    .recommendation-tab{
+.recommendation-wrap {
+    .recommendation-tab {
         margin-top: 0.2rem;
         border-bottom: $border;
         width: 100%;
-        ul{
+        ul {
             display: flex;
-            li{
+            li {
                 margin-right: 0.3rem;
                 margin-bottom: -1px;
                 padding-bottom: 0.1rem;
                 font-size: 0.15rem;
                 cursor: pointer;
             }
-            .selected{
+            .selected {
                 color: $theme-color;
                 border-bottom: 2px solid $theme-color;
             }
         }
     }
-    .poster-wrap{
+    .poster-wrap {
         margin-top: .4rem;
+    }
+    .personal-wrap {
+        display: flex;
+        margin-top: 30px;
+        &>div {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:not(:last-child) {
+                border-right: $border;
+            }
+            i {
+                display: block;
+                width: .5rem;
+                height: .5rem;
+                line-height: .5rem;
+                border: 1px solid $theme-color;
+                border-radius: 50%;
+                text-align: center;
+                .material-design-icon {
+                    width: 4em;
+                    margin: auto;
+                    height: 100%;
+                    align-items: center;
+                    flex-grow: 1;
+                    display: flex;
+                    justify-content: center;
+                    svg {
+                        fill: $theme-color;
+                        width: .32rem;
+                        height: .32rem;
+                    }
+                }
+                span{
+                    font-size: .25rem;
+                    font-style: normal;
+                    color: $theme-color;
+                }
+            }
+            .personal-content{
+                margin-left: .10rem;
+                span{
+                    display: block;
+                }
+                .content-name{
+                    font-size: .15rem;
+                    color: #333;
+                }
+                .content-des{
+                    margin-top: .10rem;
+                    font-size: .12rem;
+                    color: #808080;
+                }
+            }
+        }
     }
 }
 </style>
