@@ -7,7 +7,7 @@
 				<div class="menu-panel">
 					<ul class="menu-items">
 						<router-link to="" tag="li" class="menu-item"><magnify /><span>搜索</span></router-link>
-						<router-link to="/index" tag="li" class="menu-item"><music /><span>发现音乐</span></router-link>
+						<router-link to="/index" tag="li" class="menu-item" active><music /><span>发现音乐</span></router-link>
 						<router-link to="" tag="li" class="menu-item"><playBox /><span>MV</span></router-link>
 						<router-link to="" tag="li" class="menu-item"><friends /><span>朋友</span></router-link>
 						<li class="menu-item" v-if='isShow'><a href="javascript:;" @click="menuShow"><transfer /></a></li>

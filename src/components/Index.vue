@@ -21,7 +21,7 @@
             </div>
             <div>
                 <i class="personal-icon">
-                    <span>09</span>
+                    <span>{{day}}</span>
                 </i>
                 <div class="personal-content">
                     <span class="content-name">每日歌曲推荐</span>
@@ -38,12 +38,23 @@
                 </div>
             </div>
         </div>
+        <div class="recommend-panel">
+            <div class="recommend-panel-top">
+                <calendarCheck class="top-icon"></calendarCheck>
+                <h1 class="top-title">推荐歌单</h1>
+                <a href="" class="top-more">更多></a>
+            </div>
+            <div class="song-sheet">
+                
+            </div>
+        </div>
     </div>
 </template>
 <script>
 import carousel from './common/carousel'
 import radio from 'icons/radio'
 import mucisBox from 'icons/music-box-outline'
+import calendarCheck from 'icons/calendar-check'
 export default {
     name: 'index',
     data() {
@@ -84,13 +95,19 @@ export default {
                 {
                     src: 'static/images/poster4.jpg'
                 }
-            ]
+            ],
+            day: '' //当前日期
         }
     },
     components: {
         carousel,
         radio,
         mucisBox,
+        calendarCheck,
+    },
+    mounted() {
+        let date = new Date()
+        this.day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
     }
 }
 </script>
@@ -153,26 +170,58 @@ export default {
                         height: .32rem;
                     }
                 }
-                span{
+                span {
                     font-size: .25rem;
                     font-style: normal;
                     color: $theme-color;
                 }
             }
-            .personal-content{
+            .personal-content {
                 margin-left: .10rem;
-                span{
+                span {
                     display: block;
                 }
-                .content-name{
+                .content-name {
                     font-size: .15rem;
                     color: #333;
                 }
-                .content-des{
+                .content-des {
                     margin-top: .10rem;
                     font-size: .12rem;
                     color: #808080;
                 }
+            }
+        }
+    }
+    .recommend-panel {
+        margin-top: .3rem;
+        padding-bottom: .10rem;
+        border-bottom: $border;
+        .recommend-panel-top {
+            position: relative;
+            .material-design-icon {
+                display: inline-block;
+                vertical-align: middle;
+                width: .25rem;
+                height: .20rem; 
+                svg {
+                    fill: $theme-color;
+                    width: .25rem;
+                    height: .20rem;
+                }
+            }
+            .top-title{
+                display: inline-block;
+                vertical-align: middle;
+                font-size: .15rem;
+                font-weight: normal;
+            }
+            .top-more{
+                position: absolute;
+                right: 0;
+                top: .04rem;
+                font-size: .12rem;
+                color: #acacac;
             }
         }
     }
