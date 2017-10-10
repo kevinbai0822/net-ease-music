@@ -44,9 +44,25 @@
                 <h1 class="top-title">推荐歌单</h1>
                 <a href="" class="top-more">更多></a>
             </div>
-            <div class="song-sheet">
-                
+        </div>
+        <div class="song-sheet">
+            <div class="song-item">
+                <div class="song-album"></div>
             </div>
+            <div class="song-item">
+                <div class="song-album"></div>                
+            </div>
+            <div class="song-item">
+                <div class="song-album"></div>
+            </div>
+            <div class="song-item">
+                <div class="song-album"></div>
+            </div>
+            <div class="song-item">
+                <div class="song-album"></div>
+            </div>
+            <div class="song-item"></div>
+            <div class="song-item"></div>
         </div>
     </div>
 </template>
@@ -222,6 +238,25 @@ export default {
                 top: .04rem;
                 font-size: .12rem;
                 color: #acacac;
+            }
+        }
+    }
+    .song-sheet{
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% + .2rem);
+        margin-left: -0.2rem;
+        .song-item{
+            margin-left: 0.2rem;
+            margin-bottom: 0.3rem;
+            width: calc(25% - 0.2rem);
+            box-sizing: border-box;
+            .song-album{
+                padding-bottom: 100%;
+                width: 100%;
+                height: 0;
+                background: url('../../static/images/album3.jpg') center no-repeat;
             }
         }
     }

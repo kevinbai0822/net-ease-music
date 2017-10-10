@@ -280,6 +280,7 @@ export default {
 		.container{
 			padding: 0.2rem 0.3rem;
 			width: 100%;
+			overflow: auto;
 		}
 	}
 }
