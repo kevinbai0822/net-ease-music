@@ -47,23 +47,59 @@
         </div>
         <div class="song-sheet">
             <div class="song-item">
-                <div class="song-album"></div>
+                <div class="sheet-album"></div>
+                <span class="sheet-name">我说这些歌很美，你说不存在的</span>
             </div>
             <div class="song-item">
-                <div class="song-album"></div>                
+                <div class="sheet-album"></div>
+                <span class="sheet-name">我说这些歌很美，你说不存在的</span>              
             </div>
             <div class="song-item">
-                <div class="song-album"></div>
+                <div class="sheet-album"></div>
+                <span class="sheet-name">我说这些歌很美，你说不存在的</span>
             </div>
             <div class="song-item">
-                <div class="song-album"></div>
+                <div class="sheet-album"></div>
+                <span class="sheet-name">我说这些歌很美，你说不存在的</span>
             </div>
             <div class="song-item">
-                <div class="song-album"></div>
+                <div class="sheet-album"></div>
+                <span class="sheet-name">我说这些歌很美，你说不存在的</span>
             </div>
-            <div class="song-item"></div>
-            <div class="song-item"></div>
         </div>
+        <div class="recommend-panel">
+            <div class="recommend-panel-top">
+                <lMusic class="top-icon"></lMusic>
+                <h1 class="top-title">独家放送</h1>
+                <a href="" class="top-more">更多></a>
+            </div>
+        </div>
+        <div class="solo-mv">
+            <div class="solo-item">
+                <div class="mv-album"></div>
+                <span class="mv-name">我说这些歌很美，你说不存在的</span>
+            </div>
+            <div class="solo-item">
+                <div class="mv-album"></div>
+                <span class="mv-name">我说这些歌很美，你说不存在的</span>
+            </div>
+            <div class="solo-item">
+                <div class="mv-album"></div>
+                <span class="mv-name">我说这些歌很美，你说不存在的</span>
+            </div>
+            <div class="solo-item">
+                <div class="mv-album"></div>
+                <span class="mv-name">我说这些歌很美，你说不存在的</span>
+            </div>
+        </div>
+        <div class="recommend-panel">
+            <div class="recommend-panel-top">
+                <disk class="top-icon"></disk>
+                <h1 class="top-title">最新音乐</h1>
+                <a href="" class="top-more">更多></a>
+            </div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -71,6 +107,8 @@ import carousel from './common/carousel'
 import radio from 'icons/radio'
 import mucisBox from 'icons/music-box-outline'
 import calendarCheck from 'icons/calendar-check'
+import lMusic from 'icons/library-music'
+import disk from 'icons/disk'
 export default {
     name: 'index',
     data() {
@@ -120,6 +158,8 @@ export default {
         radio,
         mucisBox,
         calendarCheck,
+        lMusic,
+        disk,
     },
     mounted() {
         let date = new Date()
@@ -252,11 +292,47 @@ export default {
             margin-bottom: 0.3rem;
             width: calc(25% - 0.2rem);
             box-sizing: border-box;
-            .song-album{
+            .sheet-album{
                 padding-bottom: 100%;
                 width: 100%;
                 height: 0;
-                background: url('../../static/images/album3.jpg') center no-repeat;
+                background: url('../../static/images/album1.jpg') center no-repeat;
+            }
+            .sheet-name{
+                display: block;
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: .15rem;
+                margin-top: 10px;
+            }
+        }
+    }
+    .solo-mv{
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% + .2rem);
+        margin-left: -0.2rem;
+        .solo-item{
+            margin-left: 0.2rem;
+            margin-bottom: 0.3rem;
+            width: calc(50% - 0.2rem);
+            box-sizing: border-box;
+            .mv-album{
+                width: 100%;
+                height: 1.75rem;
+                border: $border;
+            }
+            .mv-name{
+                display: block;
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: .15rem;
+                margin-top: 10px;
             }
         }
     }
