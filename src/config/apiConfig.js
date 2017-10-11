@@ -1,0 +1,1 @@
+export const apiServer = 'https://api.imjad.cn/cloudmusic/'

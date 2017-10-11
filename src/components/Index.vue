@@ -99,7 +99,7 @@
                 <a href="" class="top-more">更多></a>
             </div>
         </div>
-        
+        <button @click='test'>test</button>
     </div>
 </template>
 <script>
@@ -109,6 +109,7 @@ import mucisBox from 'icons/music-box-outline'
 import calendarCheck from 'icons/calendar-check'
 import lMusic from 'icons/library-music'
 import disk from 'icons/disk'
+import {Song} from '../config/webapi.js' 
 export default {
     name: 'index',
     data() {
@@ -164,6 +165,13 @@ export default {
     mounted() {
         let date = new Date()
         this.day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+    },
+    methods: {
+        test(){
+            Song('song', 28700964).then((data) => {
+                console.log(data)
+            })
+        }
     }
 }
 </script>
