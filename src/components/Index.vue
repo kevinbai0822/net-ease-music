@@ -109,7 +109,7 @@ import mucisBox from 'icons/music-box-outline'
 import calendarCheck from 'icons/calendar-check'
 import lMusic from 'icons/library-music'
 import disk from 'icons/disk'
-import {Song} from '../config/webapi.js' 
+import {Song, Search, PlayList} from '../config/webapi.js' 
 export default {
     name: 'index',
     data() {
@@ -168,7 +168,7 @@ export default {
     },
     methods: {
         test(){
-            Song('song', 28700964).then((data) => {
+            PlayList(368962216).then((data) => {
                 console.log(data)
             })
         }

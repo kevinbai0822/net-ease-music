@@ -67,6 +67,7 @@ import volume from 'icons/volume-high'
 import heart from 'icons/heart-outline'
 import {mapMutations, mapGetters} from 'vuex'
 import volumeBox from './volume'
+import {PlayList, Song} from '../../config/webapi'
 
 export default {
     name: 'player',
@@ -107,6 +108,10 @@ export default {
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
+        PlayList(368962216).then((data) => {
+            let list = this.readList(data.playlist)
+            this.$store.commit('setList', list)
+        })
         this.$store.commit('setUrl', this.playList[0].url)
         let that = this
         document.addEventListener('mouseup', function(){
@@ -151,8 +156,6 @@ export default {
             this.isPlay = true
         },
         next(){
-            // if(this.playIndex < this.playList.length - 1){
-            //     }
             this.$store.commit('playNext')
             this.player.load()
             this.player.play()
@@ -220,6 +223,22 @@ export default {
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
         },
+        readList(list){
+            let arr = list.tracks
+            let l = []
+            for(let i in arr){
+                let obj = {}
+                obj.name = arr[i].name
+                obj.author = arr[i].ar[0].name
+                obj.album = arr[i].al.picUrl
+                Song(arr[i].id).then((data) => {
+                    obj.url = data.data[0].url
+                })
+                l.push(obj)
+                console.log(obj)
+            }
+            return l
+        }
     },
     watch: {
         
