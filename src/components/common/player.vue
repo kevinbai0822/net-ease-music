@@ -109,10 +109,12 @@ export default {
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
         PlayList(368962216).then((data) => {
-            let list = this.readList(data.playlist)
-            this.$store.commit('setList', list)
+            this.readList(data.playlist)
+        }).then(() => {
+            this.$store.commit('setUrl', this.playList[0].url)
+        }).catch((err) => {
+            console.log(err)
         })
-        this.$store.commit('setUrl', 'https://m7.music.126.net/20171013222318/75ed2c1781080c288a0cf733aff68c7d/ymusic/58ae/f9d8/93cf/19f4dd8a406bcc9c765f4f585b5a9e8f.mp3')
         let that = this
         document.addEventListener('mouseup', function(){
             // that.sliderUp(event)
@@ -233,10 +235,12 @@ export default {
                 obj.album = arr[i].al.picUrl
                 Song(arr[i].id).then((data) => {
                     obj.url = data.data[0].url
+                }).catch((err) => {
+                    console.log(err)
                 })
                 l.push(obj)
             }
-            return l
+            this.$store.commit('setList', l)
         },
     },
     watch: {
