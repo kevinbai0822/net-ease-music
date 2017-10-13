@@ -5,7 +5,14 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {    //管理组件中的状态，在组件计算属性中调用
-        playList: [{}],
+        playList: [
+            {
+                name: '歌曲名称',
+                author: '歌手',
+                album: '',
+                url: '',
+            }
+        ],
         playUrl: '',
         playIndex: 0,
         playDuration: '00:00',
@@ -48,5 +55,10 @@ export const store = new Vuex.Store({
                 state.playUrl = state.playList[state.playIndex].url
             }
         },
+    },
+    actions: {
+        getList({commit, state}){
+            
+        }
     }
 })

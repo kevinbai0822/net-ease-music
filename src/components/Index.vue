@@ -99,7 +99,6 @@
                 <a href="" class="top-more">更多></a>
             </div>
         </div>
-        <button @click='test'>test</button>
     </div>
 </template>
 <script>
@@ -167,11 +166,7 @@ export default {
         this.day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
     },
     methods: {
-        test(){
-            PlayList(368962216).then((data) => {
-                console.log(data)
-            })
-        }
+        
     }
 }
 </script>
