@@ -103,21 +103,24 @@ export default {
         heart,
         volumeBox,
     },
+    created(){
+        PlayList(368962216).then((data) => {
+            this.readList(data.playlist)
+        }).then(() => {
+            // this.$store.commit('setUrl', this.playList[0].url)
+        }).catch((err) => {
+            console.log(err)
+        })
+    },
     mounted() {
         this.player = this.$refs.audio
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
-        PlayList(368962216).then((data) => {
-            this.readList(data.playlist)
-        }).then(() => {
-            this.$store.commit('setUrl', this.playList[0].url)
-        }).catch((err) => {
-            console.log(err)
-        })
+        
+        this.$store.commit('setUrl', this.playList[0].url)
         let that = this
         document.addEventListener('mouseup', function(){
-            // that.sliderUp(event)
         })
     },
     computed: {
