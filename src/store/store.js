@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
                 name: '歌曲名称',
                 author: '歌手',
                 album: '',
-                url: '',
+                url: null,
             }
         ],
         playUrl: '',
@@ -57,6 +57,7 @@ export const store = new Vuex.Store({
             }
         },
         getList: (state) => {
+            let idArr = []
             PlayList(368962216).then((data) => {
                 let arr = data.playlist.tracks
                 if(arr){
@@ -68,14 +69,19 @@ export const store = new Vuex.Store({
                         obj.album = i.al.picUrl
                         Song(i.id).then((data) => {
                             obj.url = data.data[0].url
+                        }).then(() => {
+                            console.log(obj)
                         })
                         state.playList.push(obj)
                     }
+                    let first = state.playList[0]
+                    // console.log(first.url)
+                    state.playUrl = state.playList[0].url
                 }else{
                     console.log('歌单请求失败')
                 }
             }).then(() => {
-                // state.playUrl = state.playList[0].url
+                state.playUrl = state.playList[0].url
             })
         }
     },
