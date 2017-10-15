@@ -104,20 +104,21 @@ export default {
         volumeBox,
     },
     created(){
-        PlayList(368962216).then((data) => {
-            this.readList(data.playlist)
-        }).then(() => {
-            // this.$store.commit('setUrl', this.playList[0].url)
-        }).catch((err) => {
-            console.log(err)
-        })
+        
     },
     mounted() {
         this.player = this.$refs.audio
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
-        
+        // PlayList(368962216).then((data) => {
+        //     this.readList(data.playlist)
+        // }).then(() => {
+        //     this.$store.commit('setUrl', this.playList[0].url)
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
+        this.$store.commit('getList')
         this.$store.commit('setUrl', this.playList[0].url)
         let that = this
         document.addEventListener('mouseup', function(){
@@ -130,7 +131,7 @@ export default {
             'playIndex',
             'playDuration',
             'playModel',
-            'playVolume'
+            'playVolume',
         ])
     },
     methods: {
@@ -228,23 +229,25 @@ export default {
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
         },
-        readList(list){
-            let arr = list.tracks
-            let l = []
-            for(let i in arr){
-                let obj = {}
-                obj.name = arr[i].name
-                obj.author = arr[i].ar[0].name
-                obj.album = arr[i].al.picUrl
-                Song(arr[i].id).then((data) => {
-                    obj.url = data.data[0].url
-                }).catch((err) => {
-                    console.log(err)
-                })
-                l.push(obj)
-            }
-            this.$store.commit('setList', l)
-        },
+        // readList(list){
+        //     let arr = list.tracks
+        //     let l = []
+        //     for(let i in arr){
+        //         let obj = {}
+        //         obj.name = arr[i].name
+        //         obj.author = arr[i].ar[0].name
+        //         obj.album = arr[i].al.picUrl
+        //         Song(arr[i].id).then((data) => {
+        //             obj.url = data.data[0].url
+        //         }).then(() => {
+        //             // this.$store.commit('setUrl', this.playList[0].url)
+        //         }).catch((err) => {
+        //             console.log(err)
+        //         })
+        //         l.push(obj)
+        //     }
+        //     this.$store.commit('setList', l)
+        // },
     },
     watch: {
         

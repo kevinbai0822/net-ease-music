@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {PlayList, Song} from '../config/webapi'
 
 Vue.use(Vuex)
 
@@ -55,10 +56,30 @@ export const store = new Vuex.Store({
                 state.playUrl = state.playList[state.playIndex].url
             }
         },
+        getList: (state) => {
+            PlayList(368962216).then((data) => {
+                let arr = data.playlist.tracks
+                if(arr){
+                    state.playList.shift()
+                    for (let i of arr){
+                        let obj = {}
+                        obj.name = i.name
+                        obj.author = i.ar[0].name
+                        obj.album = i.al.picUrl
+                        Song(i.id).then((data) => {
+                            obj.url = data.data[0].url
+                        })
+                        state.playList.push(obj)
+                    }
+                }else{
+                    console.log('歌单请求失败')
+                }
+            }).then(() => {
+                // state.playUrl = state.playList[0].url
+            })
+        }
     },
     actions: {
-        getList({commit, state}){
-            
-        }
+
     }
 })
