@@ -65,7 +65,7 @@ import loop from 'icons/loop'
 import playList from 'icons/playlist-play'
 import volume from 'icons/volume-high'
 import heart from 'icons/heart-outline'
-import {mapMutations, mapGetters} from 'vuex'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
 import volumeBox from './volume'
 import {PlayList, Song} from '../../config/webapi'
 
@@ -104,22 +104,13 @@ export default {
         volumeBox,
     },
     created(){
-        
-    },
+        },
     mounted() {
         this.player = this.$refs.audio
         this.isEnd = this.player.ended
         this.proBarWid = this.$refs.progressBar.offsetWidth
         this.playSlider = document.querySelector(".player-slider")
-        // PlayList(368962216).then((data) => {
-        //     this.readList(data.playlist)
-        // }).then(() => {
-        //     this.$store.commit('setUrl', this.playList[0].url)
-        // }).catch((err) => {
-        //     console.log(err)
-        // })
-        this.$store.commit('getList')
-        this.$store.commit('setUrl', this.playList[0].url)
+        this.getList()
         let that = this
         document.addEventListener('mouseup', function(){
         })
@@ -229,28 +220,34 @@ export default {
                 this.player.currentTime = this.newLeft.replace("%","") / 100 * this.player.duration
             }
         },
-        // readList(list){
-        //     let arr = list.tracks
-        //     let l = []
-        //     for(let i in arr){
-        //         let obj = {}
-        //         obj.name = arr[i].name
-        //         obj.author = arr[i].ar[0].name
-        //         obj.album = arr[i].al.picUrl
-        //         Song(arr[i].id).then((data) => {
-        //             obj.url = data.data[0].url
-        //         }).then(() => {
-        //             // this.$store.commit('setUrl', this.playList[0].url)
-        //         }).catch((err) => {
-        //             console.log(err)
-        //         })
-        //         l.push(obj)
-        //     }
-        //     this.$store.commit('setList', l)
-        // },
-    },
-    watch: {
-        
+        getList(){
+            let task = []
+            let arr = []
+            let list = []
+            PlayList(369767291).then((data) => {
+                arr = data.playlist.tracks
+                for (let i of arr){
+                    task.push(Song(i.id))
+                }
+            }).then(() => {
+                Promise.all(task).then((data) => {
+                    if(arr){
+                        this.playList.shift()
+                        for(let j in arr){
+                            let obj = {}
+                            obj.name = arr[j].name
+                            obj.author = arr[j].ar[0].name
+                            obj.album = arr[j].al.picUrl
+                            obj.url = data[j].data[0].url
+                            list.push(obj)
+                            this.$store.commit('setList', list)
+                        }
+                    }
+                    this.$store.commit('setUrl', this.playList[0].url)
+                    this.player.load()
+                })
+            })
+        }
     }
 }
 </script>
