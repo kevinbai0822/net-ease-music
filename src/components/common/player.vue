@@ -50,7 +50,7 @@
                 <volume />
             </a>
             <volumeBox v-if='isVolume'></volumeBox>
-            <a href="javascript:;">
+            <a href="javascript:;" @click='listShow'>
                 <playList />
             </a>
         </div>
@@ -72,7 +72,7 @@ import {PlayList, Song} from '../../config/webapi'
 export default {
     name: 'player',
     props: {
-        
+
     },
     data() {
         return {
@@ -104,7 +104,7 @@ export default {
         volumeBox,
     },
     created(){
-        },
+    },
     mounted() {
         this.player = this.$refs.audio
         this.isEnd = this.player.ended
@@ -123,6 +123,7 @@ export default {
             'playDuration',
             'playModel',
             'playVolume',
+            'showList',
         ])
     },
     methods: {
@@ -247,6 +248,10 @@ export default {
                     this.player.load()
                 })
             })
+        },
+        listShow(){
+            let boo = this.showList
+            this.$store.commit('ShowList', !boo)
         }
     }
 }

@@ -39,6 +39,7 @@
 			</div>
 		</div>
 		<player></player>
+		<songList v-if='showList'></songList>
 	</div>
 </template>
 
@@ -61,6 +62,8 @@ import transfer from 'icons/transfer'
 import setting from 'icons/settings'
 import email from 'icons/email-outline'
 import player from './components/common/player'
+import songList from './components/song-list'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
 
 export default {
 	name: 'app',
@@ -76,8 +79,19 @@ export default {
 					sheetName: '乱·收'
 				}
 			],
-			isShow: false
+			isShow: false,
 		}
+	},
+	computed: {
+		...mapGetters([
+            'playList',
+            'playUrl',
+            'playIndex',
+            'playDuration',
+            'playModel',
+            'playVolume',
+            'showList',
+        ])
 	},
 	components:{
 		MenuList,
@@ -98,6 +112,7 @@ export default {
 		setting,
 		email,
 		player,
+        songList,
 	},
 	methods: {
 		menuIndent(){

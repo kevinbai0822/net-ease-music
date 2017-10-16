@@ -18,7 +18,8 @@ export const store = new Vuex.Store({
         playIndex: 0,
         playDuration: '00:00',
         playModel: 'loop',
-        playVolume: 0.6
+        playVolume: 0.6,
+        showList: false
     },
     getters: {
         playList: state => state.playList,
@@ -27,6 +28,7 @@ export const store = new Vuex.Store({
         playDuration:  state => state.playDuration,
         playModel: state => state.playModel,
         playVolume: state => state.playVolume,
+        showList: state => state.showList
     },
     mutations: {    //定义方法促使试图更新，在组件的methods中提交
         setList: (state, list) => (state.playList = list),
@@ -34,6 +36,7 @@ export const store = new Vuex.Store({
         setModel: (state, model) => {state.playModel = model},
         setDuration: (state, duration) => {state.playDuration = duration},
         setVolume: (state, volume) => {state.playVolume = volume},
+        ShowList: (state, show) => {state.showList = show},
         playNext: (state) => {
             if(state.playModel === 'order'){
                 if(state.playIndex < state.playList.length - 1){
