@@ -26,14 +26,7 @@ export default {
     mounted(){
         // this.songsrc = this.playList[0].url
         // let ap = document.querySelector("audio")
-        let list = this.playList
-        for (let i of list){
-            let ap = new Audio(i.url)
-            // ap.load()
-            console.log(ap.duration)
-            // i.duration = ap.duration
-        }
-        this.$store.commit('setList', list)
+        
     },
     computed: {
         ...mapGetters([
