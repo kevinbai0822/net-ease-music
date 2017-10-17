@@ -240,6 +240,7 @@ export default {
                             obj.author = arr[j].ar[0].name
                             obj.album = arr[j].al.picUrl
                             obj.url = data[j].data[0].url
+                            obj.duration = null
                             list.push(obj)
                             this.$store.commit('setList', list)
                         }

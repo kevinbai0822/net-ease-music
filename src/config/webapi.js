@@ -45,3 +45,17 @@ export const PlayList = (id) => {
         })
     })
 }
+
+export const SongDetail = (id) => {
+    return new Promise((resolve, reject) => {
+        Vue.http.get(apiServer+'?type=detail', {
+            params: {id}
+        }).then(
+        (rst) => {
+            resolve(rst.data)
+        },
+        (rst) => {
+            reject(rst.data)
+        })
+    })
+}

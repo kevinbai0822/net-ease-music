@@ -10,16 +10,30 @@
                 <div class="song-duration">02:30</div>
             </li>
         </ul>
+        <audio :src="songsrc"></audio>
     </div>
 </template>
 
 <script>
 import {mapMutations, mapGetters, mapActions} from 'vuex'
+import {SongDetail} from '../config/webapi'
 export default {
     data(){
         return{
-
+            songsrc: ''
         }
+    },
+    mounted(){
+        // this.songsrc = this.playList[0].url
+        // let ap = document.querySelector("audio")
+        let list = this.playList
+        for (let i of list){
+            let ap = new Audio(i.url)
+            // ap.load()
+            console.log(ap.duration)
+            // i.duration = ap.duration
+        }
+        this.$store.commit('setList', list)
     },
     computed: {
         ...mapGetters([
@@ -30,6 +44,11 @@ export default {
             'playModel',
             'playVolume',
         ])
+    },
+    watch: {
+        songsrc(val){
+            console.log(val)
+        }
     }
 }
 </script>
