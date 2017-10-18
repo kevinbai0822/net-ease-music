@@ -4,7 +4,7 @@
             <h1>播放列表</h1>
         </div>
         <ul class="song-list">
-            <li v-for="pl in playList" :key='pl.id'>
+            <li v-for="(pl, index) in playList" :key='index' @click='playSong(pl, index)'>
                 <div class="song-name">{{pl.name}}</div>
                 <div class="song-author">{{pl.author}}</div>
                 <div class="song-duration">02:30</div>
@@ -24,9 +24,7 @@ export default {
         }
     },
     mounted(){
-        // this.songsrc = this.playList[0].url
-        // let ap = document.querySelector("audio")
-        
+
     },
     computed: {
         ...mapGetters([
@@ -37,6 +35,12 @@ export default {
             'playModel',
             'playVolume',
         ])
+    },
+    methods: {
+        playSong(l, i){
+            this.$store.commit('setUrl', l.url)
+            this.$store.commit('setIndex', i)
+        }
     },
     watch: {
         songsrc(val){

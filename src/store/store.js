@@ -33,6 +33,7 @@ export const store = new Vuex.Store({
     mutations: {    //定义方法促使试图更新，在组件的methods中提交
         setList: (state, list) => (state.playList = list),
         setUrl: (state, url) => {state.playUrl = url},
+        setIndex: (state, index) => {state.playIndex = index},
         setModel: (state, model) => {state.playModel = model},
         setDuration: (state, duration) => {state.playDuration = duration},
         setVolume: (state, volume) => {state.playVolume = volume},

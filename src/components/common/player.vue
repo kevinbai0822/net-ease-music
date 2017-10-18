@@ -136,13 +136,13 @@ export default {
         },
         playerPlay() {
             this.player.play()
-            this.isPlay = !this.isPlay
+            this.isPlay = true
             this.getDuration()
             this.player.volume = 1
         },
         playerPause() {
             this.player.pause()
-            this.isPlay = !this.isPlay
+            this.isPlay = false
         },
         playerEnd(){
             this.next()
@@ -253,6 +253,15 @@ export default {
         listShow(){
             let boo = this.showList
             this.$store.commit('ShowList', !boo)
+        }
+    },
+    watch: {
+        playUrl(val, oldVal){
+            if(oldVal){
+                this.isPlay = true
+                this.player.load()
+                this.player.play()
+            }
         }
     }
 }
