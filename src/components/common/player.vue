@@ -124,6 +124,7 @@ export default {
             'playModel',
             'playVolume',
             'showList',
+            'playListId',
         ])
     },
     methods: {
@@ -149,14 +150,10 @@ export default {
         },
         prev(){
             this.$store.commit('playPrev')
-            this.player.load()
-            this.player.play()
             this.isPlay = true
         },
         next(){
             this.$store.commit('playNext')
-            this.player.load()
-            this.player.play()
             this.isPlay = true
         },
         getDuration(){
@@ -225,7 +222,7 @@ export default {
             let task = []
             let arr = []
             let list = []
-            PlayList(369767291).then((data) => {
+            PlayList(this.playListId).then((data) => {
                 arr = data.playlist.tracks
                 for (let i of arr){
                     task.push(Song(i.id))
@@ -262,6 +259,9 @@ export default {
                 this.player.load()
                 this.player.play()
             }
+        },
+        playListId(val){
+            this.getList()
         }
     }
 }

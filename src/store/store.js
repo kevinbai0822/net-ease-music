@@ -14,12 +14,13 @@ export const store = new Vuex.Store({
                 url: '',
             }
         ],
+        playListId: 369767291,
         playUrl: '',
         playIndex: 0,
         playDuration: '00:00',
         playModel: 'loop',
         playVolume: 0.6,
-        showList: false
+        showList: false,
     },
     getters: {
         playList: state => state.playList,
@@ -28,7 +29,8 @@ export const store = new Vuex.Store({
         playDuration:  state => state.playDuration,
         playModel: state => state.playModel,
         playVolume: state => state.playVolume,
-        showList: state => state.showList
+        showList: state => state.showList,
+        playListId: state => state.playListId,
     },
     mutations: {    //定义方法促使试图更新，在组件的methods中提交
         setList: (state, list) => (state.playList = list),
