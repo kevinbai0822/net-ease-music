@@ -21,6 +21,12 @@ export const store = new Vuex.Store({
         playModel: 'loop',
         playVolume: 0.6,
         showList: false,
+        playListMenu: [
+            {
+                name: '这是我的火影呀',
+                id: 369767291,
+            }
+        ]
     },
     getters: {
         playList: state => state.playList,
