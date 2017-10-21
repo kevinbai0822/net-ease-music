@@ -23,9 +23,17 @@ export const store = new Vuex.Store({
         showList: false,
         playListMenu: [
             {
+                name: '我说这些歌很美，你说是的',
+                id: 316015731
+            },
+            {
                 name: '这是我的火影呀',
                 id: 369767291,
-            }
+            },
+            {
+                name: '在我的BGM里没人是我的对手',
+                id: 368962216,
+            }, 
         ]
     },
     getters: {
@@ -37,6 +45,7 @@ export const store = new Vuex.Store({
         playVolume: state => state.playVolume,
         showList: state => state.showList,
         playListId: state => state.playListId,
+        playListMenu: state=> state.playListMenu,
     },
     mutations: {    //定义方法促使试图更新，在组件的methods中提交
         setList: (state, list) => (state.playList = list),
@@ -46,6 +55,7 @@ export const store = new Vuex.Store({
         setDuration: (state, duration) => {state.playDuration = duration},
         setVolume: (state, volume) => {state.playVolume = volume},
         ShowList: (state, show) => {state.showList = show},
+        setListId: (state, id) => {state.playListId = id},
         playNext: (state) => {
             if(state.playModel === 'order'){
                 if(state.playIndex < state.playList.length - 1){

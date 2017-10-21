@@ -24,7 +24,7 @@
 					<div class="menu-title" v-if='!isShow'>创建的歌单 <plusCircle /></div>
 					<ul class="menu-items" v-if='!isShow'>
 						<router-link to="" tag="li" class="menu-item"><heart /><span>我喜欢的音乐</span></router-link>
-						<router-link to="" tag="li" class="menu-item" v-for='s in songSheet' :key="s.id"><headphone /><span>{{s.sheetName}}</span></router-link>
+						<router-link to="" tag="li" class="menu-item" v-for='s in playListMenu' :key="s.id" @click.native='changeList(s.id)'><headphone /><span>{{s.name}}</span></router-link>
 					</ul>
 				</div>
 				<div class="user-panel">
@@ -63,22 +63,13 @@ import setting from 'icons/settings'
 import email from 'icons/email-outline'
 import player from './components/common/player'
 import songList from './components/song-list'
+import index from './components/index'
 import {mapMutations, mapGetters, mapActions} from 'vuex'
 
 export default {
 	name: 'app',
 	data(){
 		return{
-			songSheet: [
-				{
-					sheetId: 1,
-					sheetName: '我说这些歌很美，你说是的'
-				},
-				{
-					sheetId: 2,
-					sheetName: '乱·收'
-				}
-			],
 			isShow: false,
 		}
 	},
@@ -90,7 +81,8 @@ export default {
             'playDuration',
             'playModel',
             'playVolume',
-            'showList',
+			'showList',
+			'playListMenu',
         ])
 	},
 	components:{
@@ -112,7 +104,8 @@ export default {
 		setting,
 		email,
 		player,
-        songList,
+		songList,
+		index
 	},
 	methods: {
 		menuIndent(){
@@ -120,6 +113,10 @@ export default {
 		},
 		menuShow(){
 			this.isShow = false
+		},
+		changeList(id){
+			console.log('asdasd')
+			this.$store.commit('setListId', id)
 		}
 	}
 }
