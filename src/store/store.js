@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
                 url: '',
             }
         ],
-        playListId: 369767291,
+        playListId: 368962216,
         playUrl: '',
         playIndex: 0,
         playDuration: '00:00',
@@ -81,7 +81,7 @@ export const store = new Vuex.Store({
         getList: (state) => {
             let task = []
             let arr = []
-            PlayList(368962216).then((data) => {
+            PlayList(state.playListId).then((data) => {
                 arr = data.playlist.tracks
                 for (let i of arr){
                     task.push(Song(i.id))
